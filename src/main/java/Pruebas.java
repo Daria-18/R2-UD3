@@ -1,6 +1,7 @@
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
@@ -23,115 +24,354 @@ public class Pruebas {
 		String nombreAlbum="";
 		IniciarTablas();
 		
-		do {
-			System.out.println("Introduce una opción:"+"\n"
-					+"1-Buscar artista"+"\n"
-					+"2-Añadir artista"+"\n"
-					+"3-Eliminar artista"+"\n"
-					+"4-Buscar album"+"\n"
-					+"5-Añadir album"+"\n"
-					+"6-Eliminar album"+"\n"
-					+"7-Listar Albumes por Artista"+"\n"
-					+"8-SALIR");
-					opcion=sc.nextInt();
+		try {
+			do {
+				System.out.println("\nIntroduce una opción:"+"\n"
+						+"1-Buscar artista"+"\n"
+						+"2-Añadir artista"+"\n"
+						+"3-Eliminar artista"+"\n"
+						+"4-Buscar album"+"\n"
+						+"5-Añadir album"+"\n"
+						+"6-Eliminar album"+"\n"
+						+"\n------------------------------\tRETO 2\t------------------------------"+"\n"
+						+"7-Listar Albumes por Artista (join)"+"\n"
+						+"8-Listar Artista por Nacionalidad (solo algunos campos)"+"\n"
+						+"9-Listar Albumes con más de 12 canciones (WHERE)"+"\n"
+						+"10-Albumes por duración (ORDER BY)"+"\n"
+						+"11-Albumes duracion entre 30 y 45 min (CRITERIOS)"+"\n"
+						+"12-Albumes por salida entre 2015 y 2025 (RANGO)"+"\n"
+						+"13-Albumes duracion 30-60min (MEDIA,SUMA,COUNT)"+"\n"
+						+"0-SALIR\n");
 				
-					switch(opcion) {
-						case 1:
-							sc.nextLine();
-							System.out.println("Como se llama el cantante que busca");
-							nombre=sc.nextLine();
-							Cantante buscado=buscarCantantePorNombre(nombre);
-							if(buscado!=null) System.out.println(buscado.toString());
-							else System.out.println("Cantante no encontrado");
-							break;
-						case 2:
-							sc.nextLine();
-							System.out.println("Introduce el nombre del artista.");
-							nombre=sc.nextLine();
-							System.out.println("Introduce la nacionalidad.");
-							String nacionalidad=sc.next();
-							System.out.println("Introduce el año de nacimiento.");
-							int año=sc.nextInt();
-							System.out.println("Introduce el mes de nacimiento.");
-							int mes=sc.nextInt();
-							System.out.println("Introduce el dia de nacimiento.");
-							int dia=sc.nextInt();
-							System.out.println("Introduce 1 si esta en activo, 2 si esta retirado.");
-							int estado=sc.nextInt();
-							if(estado==1) añadirCantante(new Cantante(nombre, nacionalidad, LocalDate.of(año, mes, dia), Cantante.Estado.enActivo));
-							else if(estado==2) añadirCantante(new Cantante(nombre, nacionalidad, LocalDate.of(año, mes, dia), Cantante.Estado.retirado));
-							else System.out.println("opcion no valida");
-							
-							break;
-						case 3:
-							sc.nextLine();
-							System.out.println("Como se llama el cantante que quiere eliminar");
-							nombre=sc.nextLine();
-							eliminarCantante(nombre);
-							break;
-						case 4:
-							sc.nextLine();
-							System.out.println("Como se llama el Album que busca");
-							nombreAlbum=sc.nextLine();
-							Album albumAuscado=buscarAlbumPorNombre(nombreAlbum);
-							if(albumAuscado!=null) System.out.println(albumAuscado.toString());
-							else System.out.println("Album no encontrado");
-							break;
-						case 5:
-							sc.nextLine();
-							System.out.println("Introduzca el nombre del cantante al que le quiere añadir un album");
-							nombre=sc.nextLine();
-							Cantante busqueda=buscarCantantePorNombre(nombre);
-							System.out.println("Como se llama el album");
-							nombreAlbum=sc.next();
-							System.out.println("Cuantas canciones tiene");
-							int numCanciones=sc.nextInt();
-							System.out.println("Cuantas horas dura");
-							int horas=sc.nextInt();
-							System.out.println("Cuantos minutos dura");
-							int min=sc.nextInt();
-							System.out.println("año de salida");
-							int añoSalida=sc.nextInt();
-							System.out.println("Que mes");
-							int mesSalida=sc.nextInt();
-							System.out.println("Que dia");
-							int diaSalida=sc.nextInt();
-							añadirAlbumaACantante(busqueda,new Album(nombreAlbum,numCanciones,LocalTime.of(horas,min, 0),LocalDate.of(añoSalida, mesSalida, diaSalida)));
-								
-							break;
-						case 6:
-							sc.nextLine();
-							System.out.println("Como se llama el cantante que quiere eliminar");
-							nombre=sc.nextLine();
-							eliminarAlbum(nombre);
-							break;
-						case 7:
-							//System.out.println("Reemplazar");
-							listarAlbumesPorArtista();
-							break;
-						case 8:
-							System.out.println("FIN DEL PROGRAMA");
-							break;
-						default:
-							System.out.println("Opción no valida.");
-							break;
+				
+				opcion=sc.nextInt();
+			
+				switch(opcion) {
+					case 1:
+						sc.nextLine();
+						System.out.println("Como se llama el cantante que busca");
+						nombre=sc.nextLine();
+						Cantante buscado=buscarCantantePorNombre(nombre);
+						if(buscado!=null) System.out.println(buscado.toString());
+						else System.out.println("Cantante no encontrado");
+						break;
+					case 2:
+						sc.nextLine();
+						System.out.println("Introduce el nombre del artista.");
+						nombre=sc.nextLine();
+						System.out.println("Introduce la nacionalidad.");
+						String nacionalidad=sc.next();
+						System.out.println("Introduce el año de nacimiento.");
+						int año=sc.nextInt();
+						System.out.println("Introduce el mes de nacimiento.");
+						int mes=sc.nextInt();
+						System.out.println("Introduce el dia de nacimiento.");
+						int dia=sc.nextInt();
+						System.out.println("Introduce 1 si esta en activo, 2 si esta retirado.");
+						int estado=sc.nextInt();
+						if(estado==1) añadirCantante(new Cantante(nombre, nacionalidad, LocalDate.of(año, mes, dia), Cantante.Estado.enActivo));
+						else if(estado==2) añadirCantante(new Cantante(nombre, nacionalidad, LocalDate.of(año, mes, dia), Cantante.Estado.retirado));
+						else System.out.println("opcion no valida");
 						
-					}
-		}while(opcion!=8);
+						break;
+					case 3:
+						sc.nextLine();
+						System.out.println("Como se llama el cantante que quiere eliminar");
+						nombre=sc.nextLine();
+						eliminarCantante(nombre);
+						break;
+					case 4:
+						sc.nextLine();
+						System.out.println("Como se llama el Album que busca");
+						nombreAlbum=sc.nextLine();
+						Album albumAuscado=buscarAlbumPorNombre(nombreAlbum);
+						if(albumAuscado!=null) System.out.println(albumAuscado.toString());
+						else System.out.println("Album no encontrado");
+						break;
+					case 5:
+						sc.nextLine();
+						System.out.println("Introduzca el nombre del cantante al que le quiere añadir un album");
+						nombre=sc.nextLine();
+						Cantante busqueda=buscarCantantePorNombre(nombre);
+						System.out.println("Como se llama el album");
+						nombreAlbum=sc.next();
+						System.out.println("Cuantas canciones tiene");
+						int numCanciones=sc.nextInt();
+						System.out.println("Cuantas horas dura");
+						int horas=sc.nextInt();
+						System.out.println("Cuantos minutos dura");
+						int min=sc.nextInt();
+						System.out.println("año de salida");
+						int añoSalida=sc.nextInt();
+						System.out.println("Que mes");
+						int mesSalida=sc.nextInt();
+						System.out.println("Que dia");
+						int diaSalida=sc.nextInt();
+						añadirAlbumaACantante(busqueda,new Album(nombreAlbum,numCanciones,LocalTime.of(horas,min, 0),LocalDate.of(añoSalida, mesSalida, diaSalida)));
+						break;
+					case 6:
+						sc.nextLine();
+						System.out.println("Como se llama el cantante que quiere eliminar");
+						nombre=sc.nextLine();
+						eliminarAlbum(nombre);
+						break;
+					case 7:
+						listarAlbumesPorArtista();
+						break;
+					case 8:
+						listarArtistaPorNacionalidad();
+						break;
+					case 9:
+						listarAlbumesTotalCanciones();
+						break;
+					case 10:
+						listarAlbumesDuracion();
+						break;
+					case 11:
+						listarAlbumesEntreDuracion();
+						break;
+					case 12:
+						listarAlbumesLanzamiento();
+						break;
+					case 13:
+						listarAlbumesCuenta();
+						break;
+					case 0:
+						System.out.println("FIN DEL PROGRAMA");
+						break;
+					default:
+						System.out.println("Opción no valida.");
+						break;
+				}
+			}while(opcion!=0);
+		}catch (InputMismatchException e) {System.out.println("Introduce un entero!!");}		
 		
 		sc.close();
-		
 		em.close();
 		emf.close();
 	}
     
-    /**
-     * Apartado 3.7
-     * <br/><br/> 
-     * Join Cantantes y Albumes
+	/**
+     * <p>Apartado 3.1</p>
+     * <p>Nuevamente devuelve un array de objetos</p>
      */
+    private static void listarArtistaPorNacionalidad() {
+    	String consulta = "SELECT c.nacionalidad, c.nombre FROM Cantante c ORDER BY c.nacionalidad ASC";
+    	
+    	try {
+        	em.getTransaction().begin();
+        	Query query = em.createQuery(consulta);
+        	
+        	List<Object[]> listaAux = query.getResultList();
+            em.getTransaction().commit();
+            
+            for(Object[] fila : listaAux) {
+            	//System.out.println(fila);   
+            	String nacionalidad = (String) fila[0];
+            	String nombre = (String) fila[1];
+            	System.out.println("Nacionalidad: " + nacionalidad + "\n\tNombre: " + nombre+"\n");
+        	}
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+        } 
+	}
     
-    private static void listarAlbumesPorArtista() {		
+    /**
+     * <p>Apartado 3.2</p>
+     * <p>Consulta WHERE</p>
+     */    
+    private static void listarAlbumesTotalCanciones() {
+    	String consulta = "SELECT a.numCanciones, a.nombre FROM Album a WHERE a.numCanciones>12 ORDER BY a.numCanciones ASC";
+    	
+    	try {
+        	em.getTransaction().begin();
+        	Query query = em.createQuery(consulta);
+        	
+        	List<Object[]> listaAux = query.getResultList();
+            em.getTransaction().commit();
+            
+            for(Object[] fila : listaAux) { 
+            	Integer numCanciones = (Integer) fila[0];
+            	String album = (String) fila[1];
+            	System.out.println(
+            			"Nº Canciones: " + numCanciones + 
+            			"\n\tNombre del Album: " + album+"\n"
+            			);
+        	}
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+        } 
+		
+	}
+    
+    /**
+     * <p>Apartado 3.3</p>
+     * <p>Consulta con ORDER BY</p>
+     */ 
+    private static void listarAlbumesDuracion() {
+    	String consulta = "SELECT a.duracion, a.nombre FROM Album a ORDER BY a.duracion DESC";
+    	
+    	try {
+        	em.getTransaction().begin();
+        	Query query = em.createQuery(consulta);
+        	
+        	List<Object[]> listaAux = query.getResultList();
+            em.getTransaction().commit();
+            
+            for(Object[] fila : listaAux) { 
+            	LocalTime duracion = (LocalTime) fila[0];
+            	String album = (String) fila[1];
+            	System.out.println(
+            			"Duracion: " + duracion + "h"+
+            			"\n\tNombre del Album: " + album+"\n"
+            			);
+        	}
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+        } 
+		
+	}
+    
+    /**
+     * <p>Apartado 3.4</p>
+     * <p>Consulta con criterios exactos y aproximados</p>
+     */ 
+    
+    private static void listarAlbumesEntreDuracion() {
+    	//Con esta consulta establecemos los parametros minimo y maximo de esta manera
+    	// Para después poder pasarle correctamente el tipo de dato que es
+    	String consulta = "SELECT a.duracion, a.nombre FROM Album a "
+    			+ "WHERE a.duracion BETWEEN :minimo AND :maximo "
+    			+ "AND a.numCanciones = 10 OR a.numCanciones = 11 "
+    			+ "ORDER BY a.duracion DESC";
+    	
+    	try {
+        	em.getTransaction().begin();
+        	Query query = em.createQuery(consulta);
+        	//Establecemos un minimo de 30 y maximo de 45 min respectivamente usando localtime of
+        	query.setParameter("minimo", LocalTime.of(0, 30));
+        	query.setParameter("maximo", LocalTime.of(0, 45));
+        	
+        	List<Object[]> listaAux = query.getResultList();
+            em.getTransaction().commit();
+            
+            for(Object[] fila : listaAux) { 
+            	LocalTime duracion = (LocalTime) fila[0];
+            	String album = (String) fila[1];
+            	System.out.println(
+            			"Duracion: " + duracion + "h"+
+            			"\n\tNombre del Album: " + album+"\n"
+            			);
+        	}
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+        } 
+		
+	}
+    
+    /**
+     * <p>Apartado 3.5</p>
+     * <p>Consulta numerico en rango determinado</p>
+     */ 
+    
+    private static void listarAlbumesLanzamiento() {
+    	// Con esta consulta establecemos de vuelta los parametros minimo y maximo de esta manera
+    	// Para después poder pasarle correctamente el tipo de dato que es
+    	String consulta = "SELECT a.fechaLanzamiento, a.nombre FROM Album a "
+    			+ "WHERE a.fechaLanzamiento BETWEEN :minimo AND :maximo "
+    			+ "ORDER BY a.fechaLanzamiento DESC";
+    	
+    	try {
+        	em.getTransaction().begin();
+        	Query query = em.createQuery(consulta);
+        	//Establecemos el rango de fechas con LocalDate of entre 2015 y 2025
+        	query.setParameter("minimo", LocalDate.of(2015,1,1));
+        	query.setParameter("maximo", LocalDate.of(2025,12,31));
+        	
+        	List<Object[]> listaAux = query.getResultList();
+            em.getTransaction().commit();
+            
+            for(Object[] fila : listaAux) { 
+            	LocalDate release = (LocalDate) fila[0];
+            	String album = (String) fila[1];
+            	System.out.println(
+            			"Fecha Salida: " + release +
+            			"\n\tNombre del Album: " + album+"\n"
+            			);
+        	}
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+        } 
+		
+	}
+    
+    /**
+     * <p>Apartado 3.6</p>
+     * <p>Consulta sumas, avg, etc...</p>
+     */ 
+    
+    private static void listarAlbumesCuenta() {
+    	// Con esta consulta establecemos de vuelta los parametros minimo y maximo de esta manera
+    	// Para después poder pasarle correctamente el tipo de dato que es
+    	String consulta = "SELECT COUNT(a), SUM(a.numCanciones), AVG(a.numCanciones) " +
+    		    "FROM Album a " +
+    		    "WHERE a.duracion BETWEEN :minimo AND :maximo";
+    	
+    	try {
+        	em.getTransaction().begin();
+        	Query query = em.createQuery(consulta);
+        	//Rango 30 y 60 min
+        	query.setParameter("minimo", LocalTime.of(0, 30));
+        	query.setParameter("maximo", LocalTime.of(1, 0));
+        	
+        	List<Object[]> listaAux = query.getResultList();
+            em.getTransaction().commit();
+            
+            for(Object[] fila : listaAux) { 
+            	Long cantidad = (Long) fila[0];
+            	Long totalCanciones = (Long) fila[1];
+            	Double mediaCanciones = (Double)fila[2];
+            	System.out.println("Álbumes entre 30 y 60 minutos: " + cantidad);
+            	System.out.println("Total de canciones: " + totalCanciones);
+            	System.out.println("Media de canciones por álbum: " + mediaCanciones);
+        	}
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+        } 
+		
+	}
+
+    
+    /**
+     * <p>Apartado 3.7</p>
+     * <p>Join Cantantes y Albumes</p>
+     */ 
+    private static void listarAlbumesPorArtista() {	
+    	// Join al tipo de dato con la relacion OneToMany (discografia) que es un HashSet en nuestra clase Cantante
     	String consulta = "SELECT c,a FROM Cantante c JOIN c.discografia a";
     	
     	try {
